@@ -3,5 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $response = [
+        "app" => "laravel-blog-api",
+        "developer" => "ThinkCode IT Solutions",
+        "version" => "v1",
+        "status" => "healthy"
+    ];
+    return response()->json($response);
 });
