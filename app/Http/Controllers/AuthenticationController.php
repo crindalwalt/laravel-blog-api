@@ -29,4 +29,30 @@ class AuthenticationController extends Controller
             "token" => $token,
         ], 200);
     }
+
+
+    public function login (Request $request){
+        $validated = $request->validate([
+            'email' => "required|email|exists:users",
+            'password' => "required|string",
+        ]);
+
+        $user = User::where("email",$validated["email"])->first();
+
+        $password_verify = Hash::check($validated['password'], $user->password);
+
+        if(!$password_verify){
+            return response()->json([
+                "message"  => "password does not match",
+            ]);
+        }
+
+        $token = $user->createToken("mobile-token")->plainTextToken;
+
+        return response()->json([
+            "message" => "Login ho gya",
+            "user" => $user,
+            "token" => $token,
+        ]);
+    }
 }
