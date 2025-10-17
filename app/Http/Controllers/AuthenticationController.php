@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -54,5 +53,6 @@ class AuthenticationController extends Controller
             "user" => $user,
             "token" => $token,
         ]);
+       $token = $user->create_token("mobile-token")->plainTextToken;
     }
 }
